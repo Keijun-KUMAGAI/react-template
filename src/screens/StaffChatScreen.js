@@ -13,7 +13,12 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import { actions } from '../store'
+
 import StaffBar from '../components/StaffBar'
+import UserList from '../components/chats/UserList'
+import UserChat from '../components/chats/UserChat'
+import SendForm from '../components/chats/SendForm'
+import UserInfo from '../components/chats/UserInfo'
 
 
 class StaffChatScreen extends React.Component {
@@ -49,11 +54,23 @@ class StaffChatScreen extends React.Component {
                     // onScroll={_.throttle((event) => this.handleChatUsersScroll(), 500)}
                     // ref={chatUsers => this.chatUsers = chatUsers}
                   >
-                    {/* <ChatUsers
-                      handleSelectUser={(id) => this.handleSelectUser(id)}
-                      selectedUser={selectedUser}
-                      chatUsers={chatUsers.concat(additionalChatUsers)}
-                    /> */}
+                    <UserList
+                      handleSelectUser={1}
+                      // selectedUser={selectedUser}
+                      // chatUsers={chatUsers.concat(additionalChatUsers)}
+                      chatUsers={[
+                        {
+                          id: 1,
+                          firstName: 'keijun',
+                          lastName: 'kumagai',
+                          lastMessage: 'hoo',
+                          lastSenderType: 2,
+                          lastAt: '2018/12/21',
+                          representative: '1',
+                          unread: '1',
+                        },
+                      ]}
+                    />
                   </div>
 
                 </Paper>
@@ -70,22 +87,34 @@ class StaffChatScreen extends React.Component {
                     this.chatChats = chatChats
                   }}
                 >
-                  {/* <ChatChats
-                    selectedUser={selectedUser}
-                    chatChats={chatChats.sort((a, b) => a.send_at >= b.send_at ? 1 : -1)}
+                  <UserChat
+                    selectedUser={1}
+                    // chatChats={chatChats.sort((a, b) => a.send_at >= b.send_at ? 1 : -1)}
+                    chatChats={[
+                      {
+                        id: 1,
+                        firstName: 'keijun',
+                        lastName: 'kumagai',
+                        lastMessage: 'hoo',
+                        lastSenderType: 2,
+                        lastAt: '2018/12/21',
+                        representative: '1',
+                        unread: '1',
+                      },
+                    ]}
                     handleReadChat={() => this.handleReadChat()}
-                    messageCurrentPage={messageCurrentPage}
-                  /> */}
+                    // messageCurrentPage={messageCurrentPage}
+                  />
                 </div>
               </Grid>
               <Grid item xs={12}>
                 <div className={classes.chatSendRoot}>
-                  {/* <ChatSend
+                  <SendForm
                     handleAutoUsersReload={() => this.handleAutoUsersReload()}
-                    handleMessageChanged={(message) => this.handleMessageChanged(message)}
-                    inputMessage={message}
-                    selectedUser={selectedUser}
-                  /> */}
+                    handleMessageChanged={message => message}
+                    inputMessage="message"
+                    // selectedUser={}
+                  />
                 </div>
               </Grid>
             </Grid>
@@ -94,9 +123,12 @@ class StaffChatScreen extends React.Component {
             <Grid container>
               <Grid item xs={12} style={{ height: '40vh' }}>
                 <Paper style={{ padding: 20, height: '70vh' }}>
-                  {/* {chatUserInfo && <UserInfo
-                    data={chatUserInfo}
-                  />} */}
+                  {true
+                  && (
+                    <UserInfo
+                      data={{}}
+                    />
+                  )}
                 </Paper>
               </Grid>
               <Grid item xs={12} style={{ height: '20vh' }}>
