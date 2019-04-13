@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -14,71 +14,64 @@ import { withRouter } from 'react-router-dom'
 import { actions } from '../store'
 
 
-class SignIn extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      email: '',
-      password: '',
-    }
-  }
+function SignIn(props) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  async userLogin(email, password) {
-    const { loginUser, history } = this.props
+  const userLogin = async () => {
+    const { loginUser, history } = props
     await loginUser({ email, password })
     history.push('/staff')
   }
 
-  render() {
-    const { classes } = this.props
-    const { email, password } = this.state
-    return (
-      <main className={classes.main}>
-        <CssBaseline />
-        <Paper className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
+  const { classes } = props
+
+  return (
+    <main className={classes.main}>
+      <CssBaseline />
+      <Paper className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <form className={classes.form}>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="email">Email Address</InputLabel>
+            <Input
+              id="email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+          </FormControl>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <Input
+              name="password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </FormControl>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={() => userLogin()}
+          >
             Sign in
-          </Typography>
-          <form className={classes.form}>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input
-                id="email"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={email}
-                onChange={e => this.setState({ email: e.target.value })}
-              />
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input
-                name="password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={e => this.setState({ password: e.target.value })}
-              />
-            </FormControl>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={() => this.userLogin(email, password)}
-            >
-              Sign in
-            </Button>
-          </form>
-        </Paper>
-      </main>
-    )
-  }
+          </Button>
+        </form>
+      </Paper>
+    </main>
+  )
 }
 
 const styles = theme => ({

@@ -1,9 +1,9 @@
 import React from 'react'
-import './App.css'
 import {
-  BrowserRouter, Route, Link, Redirect,
+  BrowserRouter, Route, Redirect,
 } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
 import StaffChatScreen from './screens/StaffChatScreen'
 
@@ -18,7 +18,10 @@ const App = () => (
           <Route
             exact
             path="/"
-            component={() => ((localStorage.getItem('userLogin') === 'true') ? <Link to="/">HOME</Link> : <Redirect to={{ pathname: '/login' }} />)}
+            component={() => ((localStorage.getItem('userLogin') === 'true')
+              ? <HomeScreen />
+              : <Redirect to={{ pathname: '/login' }} />)
+            }
           />
           <Route
             path="/login"

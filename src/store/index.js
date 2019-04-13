@@ -1,17 +1,12 @@
 import { combineReducers, applyMiddleware } from 'redux'
-import axios from 'axios'
 import thunk from 'redux-thunk'
 import ReactoTronConfig from './ReactoTronConfig'
 
 const loginUser = async (dispatch, { email, password }) => {
   try {
-    const response = await axios.post('http://localhost:4000/api/v4/account/login', {
-      attributes: {
-        email,
-        password,
-      },
-    })
-    return dispatch({ type: 'LOGIN_USER_SUCCESS', payload: response.data })
+    console.log(email, password, 'axiosとかを使って何らかの認証処理')
+    // axiosとかを使って何らかの認証処理
+    return dispatch({ type: 'LOGIN_USER_SUCCESS', payload: {} })
   } catch (err) {
     return dispatch({ type: 'LOGIN_USER_FAITURE', payload: err })
   }
@@ -30,13 +25,13 @@ const initialState = {
 const userReducers = (state = initialState, action) => {
   switch (action.type) {
   case 'LOGIN_USER_SUCCESS':
-    localStorage.setItem('userToken', action.payload.data.attributes.token)
+    // localStorage.setItem('userToken', action.payload.data.attributes.token)
     localStorage.setItem('userLogin', 'true')
     return {
       ...state,
       LogIn: true,
-      userID: action.payload.data.attributes.user_id,
-      userToken: action.payload.data.attributes.token,
+      // userID: action.payload.data.attributes.user_id,
+      // userToken: action.payload.data.attributes.token,
     }
   case 'LOGIN_USER_FAITURE':
     // 何かしらのエラー発生のための通知
